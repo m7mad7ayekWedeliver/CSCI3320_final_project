@@ -8,7 +8,6 @@
 # from sklearn.preprocessing import StandardScaler,normalize
 # from sklearn.metrics import silhouette_score
 #
-#
 # data=pd.read_csv("health_data.csv")
 # data.head()
 # selected_cols=["age","sex","PhysHlth","DiffWalk"]
@@ -41,10 +40,10 @@
 #
 # kmeans_sel=KMeans (init='k-means++',n_clusters=3,n_init=100,random_state=1).fit(normalized_df)
 # lables=pd.DataFrame(kmeans_sel.lables_)
-# scatters(cluster_data,h='Cluster')
+# scatters=silhouette_samples.scatter(cluster_data,h='Cluster')
 #
 #
-# grouped_km=clustered_data.groupby(['Cluster']).mean().round(1)
+# grouped_km=cluster_data.groupby(['Cluster']).mean().round(1)
 # print(grouped_km)
 #
 # import numpy as nm
@@ -91,26 +90,21 @@ from sklearn.cluster import KMeans
 db=pd.read_csv('health_data.csv')
 x = db.Age.values.tolist()
 y = db.BMI.values.tolist()
-
 plt.scatter(x, y)
 plt.show()
 
 data = list(zip(x, y))
 inertias = []
-
 for i in range(1,11):
     kmeans = KMeans(n_clusters=i)
     kmeans.fit(data)
     inertias.append(kmeans.inertia_)
-
 plt.plot(range(1,11), inertias, marker='o')
 plt.title('Elbow method')
 plt.xlabel('Number of clusters')
 plt.ylabel('Inertia')
 plt.show()
-
 kmeans = KMeans(n_clusters=5)
 kmeans.fit(data)
-
 plt.scatter(x, y, c=kmeans.labels_)
 plt.show()
